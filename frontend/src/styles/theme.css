@@ -1,0 +1,110 @@
+/* Theme CSS Custom Properties */
+
+/* Light Theme Variables */
+:root {
+  --theme-background: #ffffff;
+  --theme-foreground: #000000;
+  --theme-primary: #007bff;
+  --theme-secondary: #6c757d;
+  --theme-muted: #f8f9fa;
+  --theme-border: #dee2e6;
+  --theme-hover: #e9ecef;
+  --theme-focus: rgba(0, 123, 255, 0.25);
+  --theme-shadow: rgba(0, 0, 0, 0.1);
+  --theme-text-primary: #000000;
+  --theme-text-secondary: #6c757d;
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+  --theme-background: #121212;
+  --theme-foreground: #ffffff;
+  --theme-primary: #0d6efd;
+  --theme-secondary: #6c757d;
+  --theme-muted: #1e1e1e;
+  --theme-border: #343a40;
+  --theme-hover: #2c2c2c;
+  --theme-focus: rgba(13, 110, 253, 0.25);
+  --theme-shadow: rgba(0, 0, 0, 0.3);
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #adb5bd;
+}
+
+/* Theme Toggle Button Styles */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--theme-background);
+  color: var(--theme-foreground);
+  box-shadow: 0 2px 8px var(--theme-shadow);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 20px;
+}
+
+.theme-toggle:hover {
+  background-color: var(--theme-hover);
+  transform: scale(1.05);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--theme-focus);
+  outline-offset: 2px;
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 15px;
+    right: 15px;
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+/* Smooth transitions for theme changes */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Prevent transitions on initial load */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --theme-border: #000000;
+  }
+
+  [data-theme="dark"] {
+    --theme-border: #ffffff;
+  }
+}

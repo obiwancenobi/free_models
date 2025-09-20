@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  ThemeProvider,
+  ThemeProvider as MuiThemeProvider,
   createTheme,
   CssBaseline,
   Container,
@@ -9,12 +9,15 @@ import {
   AppBar,
   Toolbar
 } from '@mui/material';
+import ThemeProvider from './components/ThemeProvider';
+import ThemeToggle from './components/ThemeToggle';
 import SearchBar from './components/SearchBar';
 import ModelList from './components/ModelList';
 import ModelDetails from './components/ModelDetails';
 import { apiService, Model } from './services/apiService';
+import './styles/theme.css';
 
-const theme = createTheme({
+const muiTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
@@ -62,45 +65,79 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box sx={{ flexGrow: 1, minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
-        <AppBar position="static" elevation={1}>
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Free AI Models Explorer
+    <ThemeProvider>
+      <MuiThemeProvider theme={muiTheme}>
+        <CssBaseline />
+        <ThemeToggle />
+        <Box sx={{ flexGrow: 1, minHeight: '100vh', backgroundColor: 'var(--theme-background)' }}>
+          <AppBar
+            position="static"
+            elevation={1}
+            sx={{
+              backgroundColor: 'var(--theme-background)',
+              color: 'var(--theme-foreground)',
+              borderBottom: '1px solid var(--theme-border)'
+            }}
+          >
+            <Toolbar>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{
+                  flexGrow: 1,
+                  color: 'var(--theme-text-primary)'
+                }}
+              >
+                Free AI Models Explorer
+              </Typography>
+            </Toolbar>
+          </AppBar>
+
+          <Container maxWidth="lg" sx={{ py: 4 }}>
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              align="center"
+              sx={{
+                color: 'var(--theme-text-primary)',
+                fontWeight: 600
+              }}
+            >
+              Discover Free AI Models
             </Typography>
-          </Toolbar>
-        </AppBar>
+            <Typography
+              variant="body1"
+              align="center"
+              sx={{
+                mb: 4,
+                color: 'var(--theme-text-secondary)'
+              }}
+            >
+              Explore free AI models available through OpenRouter
+            </Typography>
 
-        <Container maxWidth="lg" sx={{ py: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
-            Discover Free AI Models
-          </Typography>
-          <Typography variant="body1" color="text.secondary" align="center" sx={{ mb: 4 }}>
-            Explore and compare free AI models available through OpenRouter
-          </Typography>
+            <SearchBar
+              value={searchTerm}
+              onChange={setSearchTerm}
+            />
 
-          <SearchBar
-            value={searchTerm}
-            onChange={setSearchTerm}
+            <ModelList
+              models={models}
+              loading={loading}
+              error={error}
+              searchTerm={searchTerm}
+              onModelClick={handleModelClick}
+            />
+          </Container>
+
+          <ModelDetails
+            model={selectedModel}
+            open={detailsOpen}
+            onClose={handleCloseDetails}
           />
-
-          <ModelList
-            models={models}
-            loading={loading}
-            error={error}
-            searchTerm={searchTerm}
-            onModelClick={handleModelClick}
-          />
-        </Container>
-
-        <ModelDetails
-          model={selectedModel}
-          open={detailsOpen}
-          onClose={handleCloseDetails}
-        />
-      </Box>
+        </Box>
+      </MuiThemeProvider>
     </ThemeProvider>
   );
 }
