@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
-  Grid,
   Typography,
   Box,
   CircularProgress,
@@ -10,19 +9,7 @@ import {
 } from '@mui/material';
 import Fuse from 'fuse.js';
 import ModelCard from './ModelCard';
-
-interface Model {
-  id: string;
-  name: string;
-  description: string;
-  provider: string;
-  pricing: {
-    prompt: number;
-    completion: number;
-  };
-  context_length: number;
-  supported_features?: string[];
-}
+import { Model } from '../services/apiService';
 
 interface ModelListProps {
   models: Model[];
@@ -39,8 +26,6 @@ const ModelList: React.FC<ModelListProps> = ({
   searchTerm,
   onModelClick
 }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Configure Fuse.js for fuzzy search
   const fuse = useMemo(() => {

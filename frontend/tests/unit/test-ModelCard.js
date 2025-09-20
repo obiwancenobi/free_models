@@ -23,9 +23,8 @@ describe('ModelCard', () => {
 
     expect(screen.getByText('GPT-3.5 Turbo')).toBeInTheDocument();
     expect(screen.getByText('Fast and efficient model by OpenAI')).toBeInTheDocument();
-    expect(screen.getByText('By OpenAI')).toBeInTheDocument();
+    expect(screen.getByText('gpt-3.5-turbo')).toBeInTheDocument();
     expect(screen.getByText('4,096 tokens')).toBeInTheDocument();
-    expect(screen.getByText('Free')).toBeInTheDocument();
   });
 
   it('calls onClick when clicked', () => {
@@ -34,16 +33,6 @@ describe('ModelCard', () => {
 
     fireEvent.click(card);
     expect(mockOnClick).toHaveBeenCalledWith(mockModel);
-  });
-
-  it('displays Paid chip for non-free models', () => {
-    const paidModel = {
-      ...mockModel,
-      pricing: { prompt: 0.002, completion: 0.002 }
-    };
-
-    render(<ModelCard model={paidModel} onClick={mockOnClick} />);
-    expect(screen.getByText('Paid')).toBeInTheDocument();
   });
 
   it('formats context length correctly', () => {

@@ -15,6 +15,7 @@ Represents an AI model available through OpenRouter API
   - `completion` (number): Cost per completion token
 - `context_length` (number): Maximum context length in tokens
 - `supported_features` (array): List of supported features (e.g., ["chat", "completion"])
+- `created` (number): Date of model created
 
 **Validation Rules:**
 - Only include models where `pricing.prompt === 0 && pricing.completion === 0` (free models)

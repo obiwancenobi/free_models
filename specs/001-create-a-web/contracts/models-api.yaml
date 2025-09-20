@@ -93,12 +93,17 @@ components:
             type: string
           description: List of supported features
           example: ["chat", "completion"]
+        created:
+          type: number
+          description: Date when model created
+          example: 1758240090
       required:
         - id
         - name
         - description
         - pricing
         - context_length
+        - created
 
     Error:
       type: object

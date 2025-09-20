@@ -17,6 +17,7 @@ describe('GET /api/models', () => {
     expect(firstModel).toHaveProperty('description');
     expect(firstModel).toHaveProperty('pricing');
     expect(firstModel).toHaveProperty('context_length');
+    expect(firstModel).toHaveProperty('created');
 
     // Check pricing structure
     expect(firstModel.pricing).toHaveProperty('prompt');

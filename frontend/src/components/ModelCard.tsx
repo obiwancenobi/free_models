@@ -6,20 +6,10 @@ import {
   Box,
   useTheme
 } from '@mui/material';
+import { Model } from '../services/apiService';
 
 interface ModelCardProps {
-  model: {
-    id: string;
-    name: string;
-    description: string;
-    provider: string;
-    pricing: {
-      prompt: number;
-      completion: number;
-    };
-    context_length: number;
-    created?: string | number;
-  };
+  model: Model;
   onClick: () => void;
 }
 
@@ -47,10 +37,6 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, onClick }) => {
             {model.name}
           </Typography>
         </Box>
-
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          {model.description}
-        </Typography>
 
         <Box display="flex" flexDirection="column" gap={0.5}>
           <Box display="flex" justifyContent="space-between" alignItems="center">

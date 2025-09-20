@@ -10,19 +10,7 @@ import {
   useMediaQuery
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
-interface Model {
-  id: string;
-  name: string;
-  description: string;
-  provider: string;
-  pricing: {
-    prompt: number;
-    completion: number;
-  };
-  context_length: number;
-  supported_features?: string[];
-}
+import { Model } from '../services/apiService';
 
 interface ModelDetailsProps {
   model: Model | null;
@@ -35,8 +23,6 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ model, open, onClose }) => 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (!model) return null;
-
-  const isFree = model.pricing.prompt === 0 && model.pricing.completion === 0;
 
   return (
     <Drawer
@@ -65,13 +51,8 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ model, open, onClose }) => 
         {/* Provider and Pricing */}
         <Box display="flex" gap={1} mb={2}>
           <Chip
-            label={`By ${model.provider}`}
+            label= {model.id}
             variant="outlined"
-            size="small"
-          />
-          <Chip
-            label={isFree ? 'Free' : 'Paid'}
-            color={isFree ? 'success' : 'primary'}
             size="small"
           />
         </Box>
