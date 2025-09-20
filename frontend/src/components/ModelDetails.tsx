@@ -34,16 +34,30 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ model, open, onClose }) => 
           width: isMobile ? '100%' : 400,
           maxWidth: '100%',
           p: 3,
+          backgroundColor: 'var(--theme-background)',
+          color: 'var(--theme-text-primary)',
         },
       }}
     >
       <Box>
         {/* Header */}
         <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
-          <Typography variant="h5" component="h1" sx={{ flexGrow: 1, mr: 2 }}>
+          <Typography
+            variant="h5"
+            component="h1"
+            sx={{
+              flexGrow: 1,
+              mr: 2,
+              color: 'var(--theme-text-primary)'
+            }}
+          >
             {model.name}
           </Typography>
-          <IconButton onClick={onClose} size="small">
+          <IconButton
+            onClick={onClose}
+            size="small"
+            sx={{ color: 'var(--theme-text-primary)' }}
+          >
             <CloseIcon />
           </IconButton>
         </Box>
@@ -51,49 +65,92 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ model, open, onClose }) => 
         {/* Provider and Pricing */}
         <Box display="flex" gap={1} mb={2}>
           <Chip
-            label= {model.id}
+            label={model.id}
             variant="outlined"
             size="small"
+            sx={{
+              color: 'var(--theme-text-primary)',
+              borderColor: 'var(--theme-border)',
+              '&:hover': {
+                backgroundColor: 'var(--theme-hover)',
+                borderColor: 'var(--theme-primary)',
+              }
+            }}
           />
         </Box>
 
-        <Divider sx={{ mb: 2 }} />
+        <Divider
+          sx={{
+            mb: 2,
+            borderColor: 'var(--theme-border)'
+          }}
+        />
 
         {/* Description */}
-        <Typography variant="body1" sx={{ mb: 3 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            mb: 3,
+            color: 'var(--theme-text-primary)'
+          }}
+        >
           {model.description}
         </Typography>
 
         {/* Technical Details */}
         <Box sx={{ mb: 3 }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>
+          <Typography
+            variant="h6"
+            sx={{
+              mb: 2,
+              color: 'var(--theme-text-primary)'
+            }}
+          >
             Technical Details
           </Typography>
 
           <Box display="flex" flexDirection="column" gap={1}>
             <Box display="flex" justifyContent="space-between">
-              <Typography variant="body2" color="text.secondary">
+              <Typography
+                variant="body2"
+                sx={{ color: 'var(--theme-text-secondary)' }}
+              >
                 Context Length:
               </Typography>
-              <Typography variant="body2">
+              <Typography
+                variant="body2"
+                sx={{ color: 'var(--theme-text-primary)' }}
+              >
                 {model.context_length.toLocaleString()} tokens
               </Typography>
             </Box>
 
             <Box display="flex" justifyContent="space-between">
-              <Typography variant="body2" color="text.secondary">
+              <Typography
+                variant="body2"
+                sx={{ color: 'var(--theme-text-secondary)' }}
+              >
                 Prompt Pricing:
               </Typography>
-              <Typography variant="body2">
+              <Typography
+                variant="body2"
+                sx={{ color: 'var(--theme-text-primary)' }}
+              >
                 {model.pricing.prompt === 0 ? 'Free' : `$${model.pricing.prompt}/token`}
               </Typography>
             </Box>
 
             <Box display="flex" justifyContent="space-between">
-              <Typography variant="body2" color="text.secondary">
+              <Typography
+                variant="body2"
+                sx={{ color: 'var(--theme-text-secondary)' }}
+              >
                 Completion Pricing:
               </Typography>
-              <Typography variant="body2">
+              <Typography
+                variant="body2"
+                sx={{ color: 'var(--theme-text-primary)' }}
+              >
                 {model.pricing.completion === 0 ? 'Free' : `$${model.pricing.completion}/token`}
               </Typography>
             </Box>
@@ -103,7 +160,13 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ model, open, onClose }) => 
         {/* Supported Features */}
         {model.supported_features && model.supported_features.length > 0 && (
           <Box>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                mb: 2,
+                color: 'var(--theme-text-primary)'
+              }}
+            >
               Supported Features
             </Typography>
             <Box display="flex" flexWrap="wrap" gap={1}>
@@ -113,6 +176,14 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ model, open, onClose }) => 
                   label={feature}
                   variant="outlined"
                   size="small"
+                  sx={{
+                    color: 'var(--theme-text-primary)',
+                    borderColor: 'var(--theme-border)',
+                    '&:hover': {
+                      backgroundColor: 'var(--theme-hover)',
+                      borderColor: 'var(--theme-primary)',
+                    }
+                  }}
                 />
               ))}
             </Box>

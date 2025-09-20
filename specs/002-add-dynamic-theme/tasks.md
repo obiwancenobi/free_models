@@ -42,39 +42,39 @@
 - All paths relative to repository root
 
 ## Phase 3.1: Setup
-- [ ] T001 Verify project structure matches plan.md (frontend/src/, frontend/tests/)
-- [ ] T002 [P] Ensure React 18+ and TypeScript dependencies are installed
+- [x] T001 Verify project structure matches plan.md (frontend/src/, frontend/tests/)
+- [x] T002 [P] Ensure React 18+ and TypeScript dependencies are installed
 
 ## Phase 3.2: Tests First (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
 **CRITICAL: These tests MUST be written and MUST FAIL before ANY implementation**
-- [ ] T003 [P] Integration test for system theme detection in frontend/tests/integration/test-theme-detection.js
-- [ ] T004 [P] Integration test for manual theme switching in frontend/tests/integration/test-theme-switching.js
-- [ ] T005 [P] Integration test for theme persistence in frontend/tests/integration/test-theme-persistence.js
-- [ ] T006 [P] Integration test for responsive icon button in frontend/tests/integration/test-theme-icon.js
+- [x] T003 [P] Integration test for system theme detection in frontend/tests/integration/test-theme-detection.js
+- [x] T004 [P] Integration test for manual theme switching in frontend/tests/integration/test-theme-switching.js
+- [x] T005 [P] Integration test for theme persistence in frontend/tests/integration/test-theme-persistence.js
+- [x] T006 [P] Integration test for responsive icon button in frontend/tests/integration/test-theme-icon.js
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
-- [ ] T007 Create theme types in frontend/src/types/theme.ts
-- [ ] T008 [P] Create theme utilities in frontend/src/utils/themeUtils.ts
-- [ ] T009 [P] Create localStorage utilities in frontend/src/utils/storageUtils.ts
-- [ ] T010 Create theme context in frontend/src/contexts/ThemeContext.tsx
-- [ ] T011 Create useTheme hook in frontend/src/hooks/useTheme.ts
-- [ ] T012 [P] Create theme CSS variables in frontend/src/styles/theme.css
-- [ ] T013 Create ThemeProvider component in frontend/src/components/ThemeProvider.tsx
-- [ ] T014 Create ThemeToggle icon button in frontend/src/components/ThemeToggle.tsx
-- [ ] T015 Integrate ThemeProvider in frontend/src/App.tsx
-- [ ] T016 Add theme CSS imports in frontend/src/index.css
+- [x] T007 Create theme types in frontend/src/types/theme.ts
+- [x] T008 [P] Create theme utilities in frontend/src/utils/themeUtils.ts
+- [x] T009 [P] Create localStorage utilities in frontend/src/utils/storageUtils.ts
+- [x] T010 Create theme context in frontend/src/contexts/ThemeContext.tsx
+- [x] T011 Create useTheme hook in frontend/src/hooks/useTheme.ts
+- [x] T012 [P] Create theme CSS variables in frontend/src/styles/theme.css
+- [x] T013 Create ThemeProvider component in frontend/src/components/ThemeProvider.tsx
+- [x] T014 Create ThemeToggle icon button in frontend/src/components/ThemeToggle.tsx
+- [x] T015 Integrate ThemeProvider in frontend/src/App.tsx
+- [x] T016 Add theme CSS imports in frontend/src/index.css
 
 ## Phase 3.4: Integration
-- [ ] T017 Connect system theme detection in ThemeContext.tsx
-- [ ] T018 Implement localStorage persistence in ThemeContext.tsx
-- [ ] T019 Add responsive positioning for ThemeToggle.tsx
+- [x] T017 Connect system theme detection in ThemeContext.tsx
+- [x] T018 Implement localStorage persistence in ThemeContext.tsx
+- [x] T019 Add responsive positioning for ThemeToggle.tsx
 
 ## Phase 3.5: Polish
-- [ ] T020 [P] Unit tests for theme utilities in frontend/tests/unit/test-themeUtils.js
-- [ ] T021 [P] Unit tests for storage utilities in frontend/tests/unit/test-storageUtils.js
-- [ ] T022 Performance tests for theme switching (<50ms)
-- [ ] T023 Update component documentation
-- [ ] T024 Run quickstart.md validation
+- [x] T020 [P] Unit tests for theme utilities in frontend/tests/unit/test-themeUtils.js
+- [x] T021 [P] Unit tests for storage utilities in frontend/tests/unit/test-storageUtils.js
+- [x] T022 Performance tests for theme switching (<50ms)
+- [x] T023 Update component documentation
+- [x] T024 Run quickstart.md validation
 
 ## Dependencies
 - Tests (T003-T006) before implementation (T007-T016)
