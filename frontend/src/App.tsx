@@ -15,6 +15,7 @@ import SearchBar from './components/SearchBar';
 import ModelList from './components/ModelList';
 import ModelDetails from './components/ModelDetails';
 import { apiService, Model } from './services/apiService';
+import { useSorting } from './hooks/useSorting';
 import './styles/theme.css';
 
 const muiTheme = createTheme({
@@ -36,6 +37,17 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedModel, setSelectedModel] = useState<Model | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+
+  // Use sorting hook
+  const {
+    sortedModels: sortedFilteredModels,
+    sortByDate,
+    sortByContextLength,
+    isSortingByDate,
+    isSortingByContext,
+    isAscending,
+    isDescending
+  } = useSorting(models, searchTerm);
 
   useEffect(() => {
     fetchModels();
@@ -120,10 +132,16 @@ function App() {
             <SearchBar
               value={searchTerm}
               onChange={setSearchTerm}
+              onSortByDate={sortByDate}
+              onSortByContext={sortByContextLength}
+              isSortingByDate={isSortingByDate}
+              isSortingByContext={isSortingByContext}
+              isAscending={isAscending}
+              isDescending={isDescending}
             />
 
             <ModelList
-              models={models}
+              models={sortedFilteredModels}
               loading={loading}
               error={error}
               searchTerm={searchTerm}

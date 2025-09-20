@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   Typography,
   Box,
@@ -7,7 +7,6 @@ import {
   useTheme,
   useMediaQuery
 } from '@mui/material';
-import Fuse from 'fuse.js';
 import ModelCard from './ModelCard';
 import { Model } from '../services/apiService';
 
@@ -26,25 +25,8 @@ const ModelList: React.FC<ModelListProps> = ({
   searchTerm,
   onModelClick
 }) => {
-
-  // Configure Fuse.js for fuzzy search
-  const fuse = useMemo(() => {
-    return new Fuse(models, {
-      keys: ['name', 'description', 'provider'],
-      threshold: 0.3,
-      includeScore: true
-    });
-  }, [models]);
-
-  // Filter models based on search term
-  const filteredModels = useMemo(() => {
-    if (!searchTerm.trim()) {
-      return models;
-    }
-
-    const results = fuse.search(searchTerm);
-    return results.map(result => result.item);
-  }, [models, searchTerm, fuse]);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (loading) {
     return (
@@ -65,19 +47,6 @@ const ModelList: React.FC<ModelListProps> = ({
     );
   }
 
-  if (filteredModels.length === 0 && models.length > 0) {
-    return (
-      <Box textAlign="center" py={4}>
-        <Typography variant="h6" color="text.secondary">
-          No models found matching "{searchTerm}"
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          Try adjusting your search terms
-        </Typography>
-      </Box>
-    );
-  }
-
   if (models.length === 0) {
     return (
       <Box textAlign="center" py={4}>
@@ -94,7 +63,7 @@ const ModelList: React.FC<ModelListProps> = ({
   return (
     <Box>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        Showing {filteredModels.length} of {models.length} models
+        Showing {models.length} models
       </Typography>
 
       <Box
@@ -102,7 +71,7 @@ const ModelList: React.FC<ModelListProps> = ({
         flexDirection="column"
         gap={2}
       >
-        {filteredModels.map((model) => (
+        {models.map((model: Model) => (
           <ModelCard
             key={model.id}
             model={model}

@@ -4,21 +4,37 @@ import {
   InputAdornment,
   IconButton,
   Box,
+  Typography,
   useTheme
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import SortIcon from '@mui/icons-material/Sort';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  onSortByDate?: () => void;
+  onSortByContext?: () => void;
+  isSortingByDate?: boolean;
+  isSortingByContext?: boolean;
+  isAscending?: boolean;
+  isDescending?: boolean;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
   value,
   onChange,
-  placeholder = "Search AI models..."
+  placeholder = "Search AI models...",
+  onSortByDate,
+  onSortByContext,
+  isSortingByDate = false,
+  isSortingByContext = false,
+  isAscending = false,
+  isDescending = false
 }) => {
   const theme = useTheme();
 
@@ -28,48 +44,101 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   return (
     <Box sx={{ mb: 3 }}>
-      <TextField
-        fullWidth
-        variant="outlined"
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon color="action" />
-            </InputAdornment>
-          ),
-          endAdornment: value && (
-            <InputAdornment position="end">
-              <IconButton
-                onClick={handleClear}
-                size="small"
-                sx={{ color: theme.palette.action.active }}
-              >
-                <ClearIcon />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            borderRadius: 2,
-            backgroundColor: theme.palette.background.paper,
-            '&:hover': {
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.primary.main,
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon color="action" />
+              </InputAdornment>
+            ),
+            endAdornment: value && (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={handleClear}
+                  size="small"
+                  sx={{ color: theme.palette.action.active }}
+                >
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: 2,
+              backgroundColor: theme.palette.background.paper,
+              '&:hover': {
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: theme.palette.primary.main,
+                },
+              },
+              '&.Mui-focused': {
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: theme.palette.primary.main,
+                  borderWidth: 2,
+                },
               },
             },
-            '&.Mui-focused': {
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.primary.main,
-                borderWidth: 2,
+          }}
+        />
+
+        {/* Sort Buttons */}
+        {onSortByDate && (
+          <IconButton
+            onClick={onSortByDate}
+            size="medium"
+            sx={{
+              color: isSortingByDate ? theme.palette.primary.main : theme.palette.action.active,
+              backgroundColor: isSortingByDate ? theme.palette.primary.main + '10' : 'transparent',
+              '&:hover': {
+                backgroundColor: theme.palette.primary.main + '20',
               },
-            },
-          },
-        }}
-      />
+              px: 2,
+              borderRadius: 1,
+            }}
+            aria-label="Sort by date"
+          >
+            <SortIcon sx={{ mr: 0.5 }} />
+            <Typography variant="body2" sx={{ fontSize: '0.75rem', fontWeight: isSortingByDate ? 600 : 400, textTransform: 'none' }}>
+              Date
+            </Typography>
+            {isSortingByDate && (
+              isAscending ? <ArrowUpwardIcon sx={{ fontSize: 14, ml: 0.5 }} /> : <ArrowDownwardIcon sx={{ fontSize: 14, ml: 0.5 }} />
+            )}
+          </IconButton>
+        )}
+
+        {onSortByContext && (
+          <IconButton
+            onClick={onSortByContext}
+            size="medium"
+            sx={{
+              color: isSortingByContext ? theme.palette.primary.main : theme.palette.action.active,
+              backgroundColor: isSortingByContext ? theme.palette.primary.main + '10' : 'transparent',
+              '&:hover': {
+                backgroundColor: theme.palette.primary.main + '20',
+              },
+              px: 2,
+              borderRadius: 1,
+            }}
+            aria-label="Sort by context length"
+          >
+            <SortIcon sx={{ mr: 0.5 }} />
+            <Typography variant="body2" sx={{ fontSize: '0.75rem', fontWeight: isSortingByContext ? 600 : 400, textTransform: 'none' }}>
+              Context
+            </Typography>
+            {isSortingByContext && (
+              isAscending ? <ArrowUpwardIcon sx={{ fontSize: 14, ml: 0.5 }} /> : <ArrowDownwardIcon sx={{ fontSize: 14, ml: 0.5 }} />
+            )}
+          </IconButton>
+        )}
+      </Box>
     </Box>
   );
 };

@@ -41,34 +41,34 @@
 - Paths shown below assume web app structure from plan.md
 
 ## Phase 3.1: Setup
-- [ ] T001 Verify project dependencies (React 18+, Material-UI 5+, TypeScript 4.9+)
-- [ ] T002 [P] Configure TypeScript interfaces for sorting in frontend/src/types/sorting.ts
+- [x] T001 Verify project dependencies (React 18+, Material-UI 5+, TypeScript 4.9+)
+- [x] T002 [P] Configure TypeScript interfaces for sorting in frontend/src/types/sorting.ts
 
 ## Phase 3.2: Tests First (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
 **CRITICAL: These tests MUST be written and MUST FAIL before ANY implementation**
-- [ ] T003 [P] Integration test sort by created date in frontend/tests/integration/test-sort-created-date.js
-- [ ] T004 [P] Integration test sort by context length in frontend/tests/integration/test-sort-context-length.js
-- [ ] T005 [P] Integration test sort with search active in frontend/tests/integration/test-sort-with-search.js
-- [ ] T006 [P] Integration test handle missing data in frontend/tests/integration/test-sort-missing-data.js
+- [x] T003 [P] Integration test sort by created date in frontend/tests/integration/test-sort-created-date.js
+- [x] T004 [P] Integration test sort by context length in frontend/tests/integration/test-sort-context-length.js
+- [x] T005 [P] Integration test sort with search active in frontend/tests/integration/test-sort-with-search.js
+- [x] T006 [P] Integration test handle missing data in frontend/tests/integration/test-sort-missing-data.js
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
-- [ ] T007 [P] Create useSorting hook in frontend/src/hooks/useSorting.ts
-- [ ] T008 [P] Add SortState interface to frontend/src/types/sorting.ts
-- [ ] T009 Modify ModelList component to integrate sorting in frontend/src/components/ModelList.tsx
-- [ ] T010 Modify SearchBar component to add sort buttons in frontend/src/components/SearchBar.tsx
-- [ ] T011 Update ModelCard to display sort indicators in frontend/src/components/ModelCard.tsx
+- [x] T007 [P] Create useSorting hook in frontend/src/hooks/useSorting.ts
+- [x] T008 [P] Add SortState interface to frontend/src/types/sorting.ts
+- [x] T009 Modify ModelList component to integrate sorting in frontend/src/components/ModelList.tsx
+- [x] T010 Modify SearchBar component to add sort buttons in frontend/src/components/SearchBar.tsx
+- [x] T011 Update ModelCard to display sort indicators in frontend/src/components/ModelCard.tsx
 
 ## Phase 3.4: Integration
-- [ ] T012 Test sorting integration with existing search functionality
-- [ ] T013 Verify responsive design of sort buttons on mobile
+- [x] T012 Test sorting integration with existing search functionality
+- [x] T013 Verify responsive design of sort buttons on mobile
 
 ## Phase 3.5: Polish
-- [ ] T014 [P] Unit tests for sorting logic in frontend/tests/unit/test-sorting-logic.js
-- [ ] T015 [P] Unit tests for useSorting hook in frontend/tests/unit/test-useSorting.js
-- [ ] T016 Performance tests for sorting large model lists
-- [ ] T017 [P] Update component documentation in frontend/README.md
-- [ ] T018 Accessibility testing for sort buttons (ARIA labels, keyboard navigation)
-- [ ] T019 Execute quickstart.md validation scenarios
+- [x] T014 [P] Unit tests for sorting logic in frontend/tests/unit/test-sorting-logic.js
+- [x] T015 [P] Unit tests for useSorting hook in frontend/tests/unit/test-useSorting.js
+- [x] T016 Performance tests for sorting large model lists
+- [x] T017 [P] Update component documentation in frontend/README.md
+- [x] T018 Accessibility testing for sort buttons (ARIA labels, keyboard navigation)
+- [x] T019 Execute quickstart.md validation scenarios
 
 ## Dependencies
 - Tests (T003-T006) before implementation (T007-T011)
