@@ -6,6 +6,7 @@ import {
   Chip,
   Divider,
   IconButton,
+  Link,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Model } from '../services/apiService';
@@ -17,6 +18,85 @@ interface ModelDetailsProps {
 }
 
 const ModelDetails: React.FC<ModelDetailsProps> = ({ model, open, onClose }) => {
+
+  // Function to parse URLs and Markdown-style links and render them as clickable links
+  const renderDescriptionWithLinks = (text: string) => {
+    if (!text) return text;
+
+    const elements: (string | React.ReactElement)[] = [];
+    let lastIndex = 0;
+
+    // First, handle Markdown-style links [text](url)
+    const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    let match;
+
+    while ((match = markdownLinkRegex.exec(text)) !== null) {
+      // Add text before the link
+      if (match.index > lastIndex) {
+        elements.push(text.slice(lastIndex, match.index));
+      }
+
+      // Add the link
+      const linkText = match[1];
+      const linkUrl = match[2];
+      elements.push(
+        <Link
+          key={`markdown-${match.index}`}
+          href={linkUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{
+            color: 'var(--theme-primary)',
+            textDecoration: 'underline',
+            '&:hover': {
+              color: 'var(--theme-primary)',
+              textDecoration: 'underline',
+            }
+          }}
+        >
+          {linkText}
+        </Link>
+      );
+
+      lastIndex = match.index + match[0].length;
+    }
+
+    // Add remaining text after last markdown link
+    if (lastIndex < text.length) {
+      const remainingText = text.slice(lastIndex);
+
+      // Then handle plain URLs in the remaining text
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const urlParts = remainingText.split(urlRegex);
+
+      urlParts.forEach((part, index) => {
+        if (urlRegex.test(part)) {
+          elements.push(
+            <Link
+              key={`url-${lastIndex + index}`}
+              href={part}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: 'var(--theme-primary)',
+                textDecoration: 'underline',
+                '&:hover': {
+                  color: 'var(--theme-primary)',
+                  textDecoration: 'underline',
+                }
+              }}
+            >
+              {part}
+            </Link>
+          );
+        } else {
+          elements.push(part);
+        }
+      });
+    }
+
+    return elements.length > 0 ? elements : text;
+  };
 
   if (!model) return null;
 
@@ -92,7 +172,7 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ model, open, onClose }) => 
             color: 'var(--theme-text-primary)'
           }}
         >
-          {model.description}
+          {renderDescriptionWithLinks(model.description)}
         </Typography>
 
         {/* Technical Details */}
