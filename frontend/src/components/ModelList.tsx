@@ -4,8 +4,6 @@ import {
   Box,
   CircularProgress,
   Alert,
-  useTheme,
-  useMediaQuery
 } from '@mui/material';
 import ModelCard from './ModelCard';
 import { Model } from '../services/apiService';
@@ -25,14 +23,12 @@ const ModelList: React.FC<ModelListProps> = ({
   searchTerm,
   onModelClick
 }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
-        <CircularProgress />
-        <Typography variant="body1" sx={{ ml: 2 }}>
+        <CircularProgress sx={{ color: 'var(--theme-primary)' }} />
+        <Typography variant="body1" sx={{ ml: 2, color: 'var(--theme-text-primary)' }}>
           Loading models...
         </Typography>
       </Box>
@@ -50,11 +46,8 @@ const ModelList: React.FC<ModelListProps> = ({
   if (models.length === 0) {
     return (
       <Box textAlign="center" py={4}>
-        <Typography variant="h6" color="text.secondary">
+        <Typography variant="h6" sx={{ color: 'var(--theme-text-secondary)' }}>
           No models available
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          Please check your connection and try again
         </Typography>
       </Box>
     );
@@ -62,7 +55,7 @@ const ModelList: React.FC<ModelListProps> = ({
 
   return (
     <Box>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+      <Typography variant="body2" sx={{ mb: 2, color: 'var(--theme-text-secondary)' }}>
         Showing {models.length} models
       </Typography>
 

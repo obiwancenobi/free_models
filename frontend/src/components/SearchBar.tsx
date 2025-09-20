@@ -4,8 +4,7 @@ import {
   InputAdornment,
   IconButton,
   Box,
-  Typography,
-  useTheme
+  Typography
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -36,8 +35,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
   isAscending = false,
   isDescending = false
 }) => {
-  const theme = useTheme();
-
   const handleClear = () => {
     onChange('');
   };
@@ -54,7 +51,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon color="action" />
+                <SearchIcon sx={{ color: 'var(--theme-text-secondary)' }} />
               </InputAdornment>
             ),
             endAdornment: value && (
@@ -62,7 +59,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 <IconButton
                   onClick={handleClear}
                   size="small"
-                  sx={{ color: theme.palette.action.active }}
+                  sx={{ color: 'var(--theme-text-secondary)' }}
                 >
                   <ClearIcon />
                 </IconButton>
@@ -72,18 +69,28 @@ const SearchBar: React.FC<SearchBarProps> = ({
           sx={{
             '& .MuiOutlinedInput-root': {
               borderRadius: 2,
-              backgroundColor: theme.palette.background.paper,
+              backgroundColor: 'var(--theme-background)',
+              color: 'var(--theme-text-primary)',
               '&:hover': {
                 '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: theme.palette.primary.main,
+                  borderColor: 'var(--theme-primary)',
                 },
               },
               '&.Mui-focused': {
                 '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: theme.palette.primary.main,
+                  borderColor: 'var(--theme-primary)',
                   borderWidth: 2,
                 },
               },
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--theme-border)',
+            },
+            '& .MuiInputLabel-root': {
+              color: 'var(--theme-text-secondary)',
+            },
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: 'var(--theme-primary)',
             },
           }}
         />
