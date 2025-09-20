@@ -1,0 +1,123 @@
+openapi: 3.0.3
+info:
+  title: Free AI Models API
+  description: |
+    API for fetching and managing free AI models available through OpenRouter.
+
+    This API provides access to AI models that are available at no cost,
+    filtered from the complete OpenRouter model catalog.
+
+    ## Rate Limits
+    - 100 requests per minute
+    - 1000 requests per hour
+
+    ## Authentication
+    Requires OpenRouter API key in Authorization header
+  version: 1.0.0
+  contact:
+    name: Free AI Models Explorer
+    url: https://github.com/your-repo/free-models
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:3001
+    description: Local development server
+  - url: https://openrouter.ai/api/v1
+    description: OpenRouter API server
+
+paths:
+  /models:
+    get:
+      summary: Get all available models
+      description: Retrieve a list of all AI models available through OpenRouter
+      operationId: getModels
+      responses:
+        '200':
+          description: Successful response with list of models
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Model'
+                required:
+                  - data
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Model:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the model
+          example: "gpt-3.5-turbo"
+        name:
+          type: string
+          description: Display name of the model
+          example: "GPT-3.5 Turbo"
+        description:
+          type: string
+          description: Detailed description of the model
+          example: "Fast and efficient model by OpenAI"
+        pricing:
+          type: object
+          properties:
+            prompt:
+              type: number
+              description: Cost per prompt token
+              example: 0
+            completion:
+              type: number
+              description: Cost per completion token
+              example: 0
+          required:
+            - prompt
+            - completion
+        context_length:
+          type: number
+          description: Maximum context length in tokens
+          example: 4096
+        supported_features:
+          type: array
+          items:
+            type: string
+          description: List of supported features
+          example: ["chat", "completion"]
+        created:
+          type: number
+          description: Date when model created
+          example: 1758240090
+      required:
+        - id
+        - name
+        - description
+        - pricing
+        - context_length
+        - created
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Error message
+              example: "Internal server error"
+            type:
+              type: string
+              description: Error type
+              example: "internal_error"
+      required:
+        - error
