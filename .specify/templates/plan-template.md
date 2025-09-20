@@ -47,7 +47,11 @@
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- [ ] Responsive Design: Ensure UI components are mobile-first and tested on multiple devices
+- [ ] Performance Optimization: Implement lazy loading and monitor bundle sizes
+- [ ] Security First: Use HTTPS, validate inputs, implement authentication
+- [ ] User-Centric Experience: Include user testing in acceptance criteria
+- [ ] Scalability and Maintainability: Use modular architecture and follow coding standards
 
 ## Project Structure
 
@@ -208,4 +212,4 @@ ios/ or android/
 - [ ] Complexity deviations documented
 
 ---
-*Based on Constitution v2.1.1 - See `/memory/constitution.md`*
+*Based on Constitution v1.0.0 - See `/memory/constitution.md`*
