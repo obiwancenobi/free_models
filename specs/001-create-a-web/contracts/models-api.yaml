@@ -1,9 +1,27 @@
 openapi: 3.0.3
 info:
-  title: AI Models API
-  description: API for fetching free AI models from OpenRouter
+  title: Free AI Models API
+  description: |
+    API for fetching and managing free AI models available through OpenRouter.
+
+    This API provides access to AI models that are available at no cost,
+    filtered from the complete OpenRouter model catalog.
+
+    ## Rate Limits
+    - 100 requests per minute
+    - 1000 requests per hour
+
+    ## Authentication
+    Requires OpenRouter API key in Authorization header
   version: 1.0.0
+  contact:
+    name: Free AI Models Explorer
+    url: https://github.com/your-repo/free-models
+  license:
+    name: MIT
 servers:
+  - url: http://localhost:3001
+    description: Local development server
   - url: https://openrouter.ai/api/v1
     description: OpenRouter API server
 

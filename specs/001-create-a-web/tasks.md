@@ -57,26 +57,26 @@
 - [x] T008 [P] Integration test bottom sheet details in frontend/tests/integration/test-model-details.js
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
-- [ ] T009 Create backend API endpoint GET /api/models in backend/src/routes/models.js
-- [ ] T010 Create AI Model service in backend/src/services/modelService.js
-- [ ] T011 [P] Create ModelCard component in frontend/src/components/ModelCard.js
-- [ ] T012 [P] Create ModelList component in frontend/src/components/ModelList.js
-- [ ] T013 [P] Create SearchBar component in frontend/src/components/SearchBar.js
-- [ ] T014 [P] Create ModelDetails bottom sheet in frontend/src/components/ModelDetails.js
-- [ ] T015 Create main App component in frontend/src/App.js
+- [x] T009 Create backend API endpoint GET /api/models in backend/src/routes/models.js
+- [x] T010 Create AI Model service in backend/src/services/modelService.js
+- [x] T011 [P] Create ModelCard component in frontend/src/components/ModelCard.tsx
+- [x] T012 [P] Create ModelList component in frontend/src/components/ModelList.tsx
+- [x] T013 [P] Create SearchBar component in frontend/src/components/SearchBar.tsx
+- [x] T014 [P] Create ModelDetails bottom sheet in frontend/src/components/ModelDetails.tsx
+- [x] T015 Create main App component in frontend/src/App.tsx
 
 ## Phase 3.4: Integration
-- [ ] T016 Create API service in frontend/src/services/apiService.js
-- [ ] T017 Implement client-side search logic in frontend/src/components/ModelList.js
-- [ ] T018 Add error handling and loading states in frontend/src/components/
-- [ ] T019 Connect backend to OpenRouter API in backend/src/services/openRouterService.js
+- [x] T016 Create API service in frontend/src/services/apiService.ts
+- [x] T017 Implement client-side search logic in frontend/src/components/ModelList.tsx
+- [x] T018 Add error handling and loading states in frontend/src/components/
+- [x] T019 Connect backend to OpenRouter API in backend/src/services/modelService.js
 
 ## Phase 3.5: Polish
-- [ ] T020 [P] Unit tests for ModelCard in frontend/tests/unit/test-ModelCard.js
-- [ ] T021 [P] Unit tests for SearchBar in frontend/tests/unit/test-SearchBar.js
-- [ ] T022 Performance optimization and bundle analysis
-- [ ] T023 Update API documentation
-- [ ] T024 Create deployment configuration
+- [x] T020 [P] Unit tests for ModelCard in frontend/tests/unit/test-ModelCard.js
+- [x] T021 [P] Unit tests for SearchBar in frontend/tests/unit/test-SearchBar.js
+- [x] T022 Performance optimization and bundle analysis
+- [x] T023 Update API documentation
+- [x] T024 Create deployment configuration
 
 ## Dependencies
 - Setup tasks (T001-T004) before all other tasks
