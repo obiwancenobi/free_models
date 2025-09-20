@@ -6,8 +6,6 @@ import {
   Chip,
   Divider,
   IconButton,
-  useTheme,
-  useMediaQuery
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Model } from '../services/apiService';
@@ -19,23 +17,23 @@ interface ModelDetailsProps {
 }
 
 const ModelDetails: React.FC<ModelDetailsProps> = ({ model, open, onClose }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (!model) return null;
 
   return (
     <Drawer
-      anchor={isMobile ? 'bottom' : 'right'}
+      anchor="bottom"
       open={open}
       onClose={onClose}
       PaperProps={{
         sx: {
-          width: isMobile ? '100%' : 400,
+          width: '100%',
           maxWidth: '100%',
+          maxHeight: '80vh',
           p: 3,
           backgroundColor: 'var(--theme-background)',
           color: 'var(--theme-text-primary)',
+          borderRadius: '12px 12px 0 0',
         },
       }}
     >
