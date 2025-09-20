@@ -94,18 +94,27 @@ const SearchBar: React.FC<SearchBarProps> = ({
             onClick={onSortByDate}
             size="medium"
             sx={{
-              color: isSortingByDate ? theme.palette.primary.main : theme.palette.action.active,
-              backgroundColor: isSortingByDate ? theme.palette.primary.main + '10' : 'transparent',
+              color: isSortingByDate ? 'var(--theme-primary)' : 'var(--theme-text-secondary)',
+              backgroundColor: isSortingByDate ? 'var(--theme-focus)' : 'transparent',
               '&:hover': {
-                backgroundColor: theme.palette.primary.main + '20',
+                backgroundColor: 'var(--theme-hover)',
               },
               px: 2,
               borderRadius: 1,
+              transition: 'all 0.2s ease',
             }}
             aria-label="Sort by date"
           >
             <SortIcon sx={{ mr: 0.5 }} />
-            <Typography variant="body2" sx={{ fontSize: '0.75rem', fontWeight: isSortingByDate ? 600 : 400, textTransform: 'none' }}>
+            <Typography
+              variant="body2"
+              sx={{
+                fontSize: '0.75rem',
+                fontWeight: isSortingByDate ? 600 : 400,
+                textTransform: 'none',
+                color: 'var(--theme-text-primary)'
+              }}
+            >
               Date
             </Typography>
             {isSortingByDate && (
@@ -119,18 +128,27 @@ const SearchBar: React.FC<SearchBarProps> = ({
             onClick={onSortByContext}
             size="medium"
             sx={{
-              color: isSortingByContext ? theme.palette.primary.main : theme.palette.action.active,
-              backgroundColor: isSortingByContext ? theme.palette.primary.main + '10' : 'transparent',
+              color: isSortingByContext ? 'var(--theme-primary)' : 'var(--theme-text-secondary)',
+              backgroundColor: isSortingByContext ? 'var(--theme-focus)' : 'transparent',
               '&:hover': {
-                backgroundColor: theme.palette.primary.main + '20',
+                backgroundColor: 'var(--theme-hover)',
               },
               px: 2,
               borderRadius: 1,
+              transition: 'all 0.2s ease',
             }}
             aria-label="Sort by context length"
           >
             <SortIcon sx={{ mr: 0.5 }} />
-            <Typography variant="body2" sx={{ fontSize: '0.75rem', fontWeight: isSortingByContext ? 600 : 400, textTransform: 'none' }}>
+            <Typography
+              variant="body2"
+              sx={{
+                fontSize: '0.75rem',
+                fontWeight: isSortingByContext ? 600 : 400,
+                textTransform: 'none',
+                color: 'var(--theme-text-primary)'
+              }}
+            >
               Context
             </Typography>
             {isSortingByContext && (
