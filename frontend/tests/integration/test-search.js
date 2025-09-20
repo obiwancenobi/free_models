@@ -11,14 +11,16 @@ jest.mock('../../src/services/apiService', () => ({
         name: 'GPT-3.5 Turbo',
         description: 'Fast and efficient model by OpenAI',
         pricing: { prompt: 0, completion: 0 },
-        context_length: 4096
+        context_length: 4096,
+        created: 1699228800
       },
       {
         id: 'claude-2',
         name: 'Claude 2',
         description: 'Advanced model by Anthropic',
         pricing: { prompt: 0, completion: 0 },
-        context_length: 8192
+        context_length: 8192,
+        created: 1689033600
       }
     ])
   )

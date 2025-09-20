@@ -11,7 +11,8 @@ jest.mock('../../src/services/apiService', () => ({
         name: 'GPT-3.5 Turbo',
         description: 'Fast and efficient model',
         pricing: { prompt: 0, completion: 0 },
-        context_length: 4096
+        context_length: 4096,
+        created: 1699228800
       }
     ])
   )

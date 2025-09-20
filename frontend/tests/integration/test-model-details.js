@@ -12,7 +12,8 @@ jest.mock('../../src/services/apiService', () => ({
         description: 'Fast and efficient model by OpenAI',
         pricing: { prompt: 0, completion: 0 },
         context_length: 4096,
-        supported_features: ['chat', 'completion']
+        supported_features: ['chat', 'completion'],
+        created: 1699228800
       }
     ])
   )

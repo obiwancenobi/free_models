@@ -13,6 +13,7 @@ export interface Model {
   };
   context_length: number;
   supported_features?: string[];
+  created?: string | number; // ISO date string or Unix timestamp when model was created
 }
 
 export interface ApiResponse<T> {

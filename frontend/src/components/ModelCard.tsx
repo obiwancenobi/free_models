@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   Typography,
-  Chip,
   Box,
   useTheme
 } from '@mui/material';
@@ -19,14 +18,13 @@ interface ModelCardProps {
       completion: number;
     };
     context_length: number;
+    created?: string | number;
   };
   onClick: () => void;
 }
 
 const ModelCard: React.FC<ModelCardProps> = ({ model, onClick }) => {
   const theme = useTheme();
-
-  const isFree = model.pricing.prompt === 0 && model.pricing.completion === 0;
 
   return (
     <Card
@@ -48,24 +46,32 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, onClick }) => {
           <Typography variant="h6" component="h2" sx={{ flexGrow: 1, mr: 1 }}>
             {model.name}
           </Typography>
-          <Chip
-            label={isFree ? 'Free' : 'Paid'}
-            color={isFree ? 'success' : 'primary'}
-            size="small"
-          />
         </Box>
 
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
           {model.description}
         </Typography>
 
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="caption" color="text.secondary">
-            By {model.provider}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            {model.context_length.toLocaleString()} tokens
-          </Typography>
+        <Box display="flex" flexDirection="column" gap={0.5}>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography variant="caption" color="text.secondary">
+              {model.id}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {model.context_length.toLocaleString()} tokens
+            </Typography>
+          </Box>
+          {model.created && (
+            <Typography variant="caption" color="text.secondary">
+              Created: {new Date(
+                typeof model.created === 'number' ? model.created * 1000 : model.created
+              ).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </Typography>
+          )}
         </Box>
       </CardContent>
     </Card>
