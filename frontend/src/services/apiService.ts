@@ -32,7 +32,8 @@ class ApiService {
   async fetchModels(): Promise<Model[]> {
     try {
       const response = await this.api.get<ApiResponse<Model[]>>('/api/models');
-      return response.data.data;
+      const data = response.data.data;
+      return Array.isArray(data) ? data : [];
     } catch (error) {
       console.error('Error fetching models:', error);
       throw new Error('Failed to fetch models. Please try again later.');

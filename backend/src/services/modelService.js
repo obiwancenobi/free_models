@@ -26,7 +26,8 @@ class ModelService {
       });
 
       // Filter only free models (pricing.prompt === 0 && pricing.completion === 0)
-      const freeModels = response.data.data.filter(model =>
+      const allModels = response.data.data || [];
+      const freeModels = allModels.filter(model =>
         model.pricing &&
         model.pricing.prompt == '0' &&
         model.pricing.completion == '0'
