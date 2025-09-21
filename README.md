@@ -9,6 +9,7 @@ A modern web application that displays and allows exploration of free AI models 
 - **Model Details**: Click any model to view detailed information in a bottom sheet
 - **Material Design**: Clean, modern UI using Material-UI components
 - **Free Models Only**: Filters and displays only free-to-use AI models
+- **Backend Caching**: 5-minute in-memory caching for improved API performance and reduced external API calls
 
 ## Tech Stack
 
@@ -22,6 +23,7 @@ A modern web application that displays and allows exploration of free AI models 
 ### Backend
 - **Node.js** with Express
 - **Axios** for external API calls
+- **node-cache** for in-memory caching (5-minute TTL)
 - **CORS** for cross-origin requests
 - **Helmet** for security headers
 - **Morgan** for request logging
@@ -34,15 +36,28 @@ free-models/
 ├── backend/                 # Node.js/Express server
 │   ├── Dockerfile          # Backend container configuration
 │   ├── package.json        # Backend dependencies and scripts
+│   ├── README.md           # Backend API documentation
 │   ├── src/
 │   │   ├── app.js         # Express application setup
+│   │   ├── middleware/    # Custom middleware
+│   │   │   └── cache.js   # Cache middleware
 │   │   ├── routes/        # API endpoints
-│   │   │   └── models.js  # Models API routes
+│   │   │   ├── models.js  # Models API routes
+│   │   │   └── cache.js   # Cache management routes
 │   │   └── services/      # Business logic
-│   │       └── modelService.js # OpenRouter API integration
+│   │       ├── modelService.js # OpenRouter API integration
+│   │       └── cacheService.js # Cache management service
 │   └── tests/             # Backend tests
 │       ├── contract/      # API contract tests
-│       └── integration/   # Integration tests
+│       │   ├── test-cache-invalidate.js
+│       │   └── test-cache-stats.js
+│       ├── integration/   # Integration tests
+│       │   ├── test-cache-hit.js
+│       │   ├── test-cache-miss.js
+│       │   ├── test-cache-expiration.js
+│       │   └── test-cache-performance.js
+│       └── unit/          # Unit tests
+│           └── test-cacheService.js
 ├── frontend/               # React application
 │   ├── Dockerfile         # Frontend container configuration
 │   ├── nginx.conf         # Nginx configuration for production
@@ -61,7 +76,14 @@ free-models/
 │       ├── integration/   # Integration tests
 │       └── unit/          # Unit tests
 ├── specs/                 # Documentation and specifications
-│   └── 001-create-a-web/  # Feature specification
+│   ├── 001-create-a-web/  # Initial web app feature
+│   │   ├── plan.md        # Implementation plan
+│   │   ├── research.md    # Technical research
+│   │   ├── data-model.md  # Data model documentation
+│   │   ├── contracts/     # API contracts
+│   │   ├── quickstart.md  # Quick start guide
+│   │   └── tasks.md       # Task breakdown
+│   └── 004-enable-cache-on/  # Backend caching feature
 │       ├── plan.md        # Implementation plan
 │       ├── research.md    # Technical research
 │       ├── data-model.md  # Data model documentation
@@ -205,12 +227,25 @@ docker run -p 80:80 free-models-frontend
   - **Description**: Retrieve all free AI models from OpenRouter
   - **Response**: Array of model objects with pricing, capabilities, and metadata
   - **Filtering**: Automatically filters for free models only (pricing.prompt = 0)
-  - **Caching**: No caching implemented (real-time data)
+  - **Caching**: 5-minute in-memory cache for improved performance
 
 - `GET /api/models/:id`
   - **Description**: Retrieve detailed information for a specific model
   - **Parameters**: `id` (string) - Model identifier
   - **Response**: Single model object with full details
+  - **Caching**: Individual model caching with 5-minute TTL
+
+#### Cache Management
+- `POST /api/cache/invalidate`
+  - **Description**: Invalidate cache entries
+  - **Authentication**: Bearer token required
+  - **Request Body**: `{ "key": "optional-cache-key" }`
+  - **Response**: Success confirmation with invalidated keys
+
+- `GET /api/cache/stats`
+  - **Description**: Get cache performance statistics
+  - **Authentication**: Bearer token required
+  - **Response**: Cache hit ratio, entry count, size information
 
 #### Health Check
 - `GET /health`
@@ -343,6 +378,8 @@ cd frontend && npm test -- --testPathPattern=integration
 - Request logging with Morgan
 - Security middleware (Helmet, CORS)
 - Health check endpoint for monitoring
+- In-memory caching with node-cache (5-minute TTL)
+- Cache statistics and invalidation endpoints
 
 ### Architecture Overview
 
@@ -359,11 +396,13 @@ cd frontend && npm test -- --testPathPattern=integration
 
 **Data Flow:**
 1. React app loads → fetches models from backend
-2. Backend proxies request to OpenRouter API
-3. Models filtered for free pricing only
-4. Frontend displays models in responsive grid
-5. User searches → client-side filtering with Fuse.js
-6. User clicks model → bottom sheet opens with details
+2. Backend checks cache first (5-minute TTL)
+3. Cache hit: returns cached data immediately
+4. Cache miss: proxies request to OpenRouter API, caches response
+5. Models filtered for free pricing only
+6. Frontend displays models in responsive grid
+7. User searches → client-side filtering with Fuse.js
+8. User clicks model → bottom sheet opens with details
 
 ## Contributing
 
@@ -406,11 +445,12 @@ This project was developed using the **OpenCode** framework, following a structu
 5. **Testing**: TDD approach with comprehensive test coverage
 
 ### Key Artifacts:
-- **Feature Spec**: `specs/001-create-a-web/spec.md`
-- **Implementation Plan**: `specs/001-create-a-web/plan.md`
-- **Task Breakdown**: `specs/001-create-a-web/tasks.md`
-- **API Contracts**: `specs/001-create-a-web/contracts/models-api.yaml`
-- **Research Findings**: `specs/001-create-a-web/research.md`
+- **Initial Feature Spec**: `specs/001-create-a-web/spec.md`
+- **Cache Feature Spec**: `specs/004-enable-cache-on/spec.md`
+- **Implementation Plans**: `specs/*/plan.md`
+- **Task Breakdowns**: `specs/*/tasks.md`
+- **API Contracts**: `specs/*/contracts/*.yaml`
+- **Research Findings**: `specs/*/research.md`
 
 ### Quality Assurance:
 - ✅ **Test-Driven Development**: Tests written before implementation
