@@ -39,6 +39,20 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Google Analytics
+
+This application includes Google Analytics 4 (GA4) integration for tracking user interactions and page views. The tracking focuses on app behavior analytics without collecting personal user data.
+
+### Configuration
+- Set the `REACT_APP_GA_MEASUREMENT_ID` environment variable with your GA4 measurement ID
+- Tracking is automatically initialized on app startup
+- Events are tracked for: page views, searches, model selections, theme toggles
+
+### Privacy
+- No personal data is collected
+- Graceful degradation when GA is blocked by ad blockers
+- All tracking failures are handled silently
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).

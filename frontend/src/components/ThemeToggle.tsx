@@ -2,6 +2,7 @@ import React from 'react';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useThemeValue, useTheme } from '../hooks/useTheme';
+import { trackEvent } from '../utils/analytics';
 
 /**
  * Theme Toggle Button Component
@@ -15,6 +16,8 @@ const ThemeToggle: React.FC = () => {
 
   const handleClick = () => {
     toggleTheme();
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    trackEvent('theme_toggle', { theme: newTheme });
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
