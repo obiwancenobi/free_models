@@ -41,33 +41,33 @@
 - Paths shown below follow the backend structure from plan.md
 
 ## Phase 3.1: Setup
-- [ ] T001 Install node-cache dependency in backend/package.json
+- [x] T001 Install node-cache dependency in backend/package.json
 - [ ] T002 [P] Configure ESLint rules for cache-related code in backend/.eslintrc.js
 
 ## Phase 3.2: Tests First (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
 **CRITICAL: These tests MUST be written and MUST FAIL before ANY implementation**
-- [ ] T003 [P] Contract test POST /api/cache/invalidate in backend/tests/contract/test-cache-invalidate.js
-- [ ] T004 [P] Contract test GET /api/cache/stats in backend/tests/contract/test-cache-stats.js
-- [ ] T005 [P] Integration test cache hit scenario in backend/tests/integration/test-cache-hit.js
-- [ ] T006 [P] Integration test cache miss scenario in backend/tests/integration/test-cache-miss.js
-- [ ] T007 [P] Integration test cache expiration in backend/tests/integration/test-cache-expiration.js
+- [x] T003 [P] Contract test POST /api/cache/invalidate in backend/tests/contract/test-cache-invalidate.js
+- [x] T004 [P] Contract test GET /api/cache/stats in backend/tests/contract/test-cache-stats.js
+- [x] T005 [P] Integration test cache hit scenario in backend/tests/integration/test-cache-hit.js
+- [x] T006 [P] Integration test cache miss scenario in backend/tests/integration/test-cache-miss.js
+- [x] T007 [P] Integration test cache expiration in backend/tests/integration/test-cache-expiration.js
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
-- [ ] T008 [P] Create CacheService in backend/src/services/cacheService.js
-- [ ] T009 Integrate cache in ModelService for fetchAllModels in backend/src/services/modelService.js
-- [ ] T010 Integrate cache in ModelService for getModelById in backend/src/services/modelService.js
-- [ ] T011 Create cache middleware in backend/src/middleware/cache.js
+- [x] T008 [P] Create CacheService in backend/src/services/cacheService.js
+- [x] T009 Integrate cache in ModelService for fetchAllModels in backend/src/services/modelService.js
+- [x] T010 Integrate cache in ModelService for getModelById in backend/src/services/modelService.js
+- [x] T011 Create cache middleware in backend/src/middleware/cache.js
 
 ## Phase 3.4: Integration
-- [ ] T012 Add cache routes in backend/src/routes/cache.js
-- [ ] T013 Integrate cache middleware in models routes in backend/src/routes/models.js
-- [ ] T014 Add cache statistics logging in backend/src/app.js
+- [x] T012 Add cache routes in backend/src/routes/cache.js
+- [x] T013 Integrate cache middleware in models routes in backend/src/routes/models.js
+- [x] T014 Add cache statistics logging in backend/src/app.js
 
 ## Phase 3.5: Polish
-- [ ] T015 [P] Unit tests for CacheService in backend/tests/unit/test-cacheService.js
-- [ ] T016 Performance tests for cache operations in backend/tests/integration/test-cache-performance.js
-- [ ] T017 [P] Update API documentation for cache endpoints in backend/README.md
-- [ ] T018 Run quickstart validation scenarios from specs/004-enable-cache-on/quickstart.md
+- [x] T015 [P] Unit tests for CacheService in backend/tests/unit/test-cacheService.js
+- [x] T016 Performance tests for cache operations in backend/tests/integration/test-cache-performance.js
+- [x] T017 [P] Update API documentation for cache endpoints in backend/README.md
+- [x] T018 Run quickstart validation scenarios from specs/004-enable-cache-on/quickstart.md
 
 ## Dependencies
 - Tests (T003-T007) before implementation (T008-T014)

@@ -18,7 +18,9 @@ app.use(express.json());
 
 // Routes
 const modelsRouter = require('./routes/models');
+const cacheRouter = require('./routes/cache');
 app.use('/api/models', modelsRouter);
+app.use('/api/cache', cacheRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -49,6 +51,7 @@ app.use((req, res) => {
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    console.log('Cache system initialized and ready');
   });
 }
 
