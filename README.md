@@ -13,6 +13,14 @@ A modern web application that displays and allows exploration of free AI models 
 - **Free Models Only**: Filters and displays only free-to-use AI models
 - **Backend Caching**: 5-minute in-memory caching for improved API performance and reduced external API calls
 
+## Screenshots
+
+### Dark Theme
+![Dark Theme Screenshot](screenshots/dark-theme.png)
+
+### Light Theme
+![Light Theme Screenshot](screenshots/light-theme.png)
+
 ## Tech Stack
 
 ### Frontend
@@ -94,6 +102,9 @@ free-models/
 │       └── tasks.md       # Task breakdown
 ├── docker-compose.yml     # Multi-container deployment
 ├── .gitignore            # Git ignore rules
+├── screenshots/          # Application screenshots
+│   ├── dark-theme.png    # Dark theme screenshot
+│   └── light-theme.png   # Light theme screenshot
 └── README.md             # This file
 ├── backend/.env          # Backend environment variables (API keys)
 └── frontend/.env         # Frontend environment variables (API URLs)
