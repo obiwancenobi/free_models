@@ -41,33 +41,33 @@
 - Paths assume frontend structure per plan.md
 
 ## Phase 3.1: Setup
-- [ ] T001 Configure Google Analytics measurement ID in frontend environment variables
-- [ ] T002 Set up GA initialization in main App component
+- [x] T001 Configure Google Analytics measurement ID in frontend environment variables
+- [x] T002 Set up GA initialization in main App component
 
 ## Phase 3.2: Tests First (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
 **CRITICAL: These tests MUST be written and MUST FAIL before ANY implementation**
-- [ ] T003 [P] Integration test for page view tracking in frontend/tests/integration/test-ga-page-views.js
-- [ ] T004 [P] Integration test for search event tracking in frontend/tests/integration/test-ga-search-events.js
-- [ ] T005 [P] Integration test for model selection event tracking in frontend/tests/integration/test-ga-model-events.js
-- [ ] T006 [P] Integration test for theme toggle event tracking in frontend/tests/integration/test-ga-theme-events.js
-- [ ] T007 [P] Integration test for ad blocker handling in frontend/tests/integration/test-ga-adblocker.js
+- [x] T003 [P] Integration test for page view tracking in frontend/tests/integration/test-ga-page-views.js
+- [x] T004 [P] Integration test for search event tracking in frontend/tests/integration/test-ga-search-events.js
+- [x] T005 [P] Integration test for model selection event tracking in frontend/tests/integration/test-ga-model-events.js
+- [x] T006 [P] Integration test for theme toggle event tracking in frontend/tests/integration/test-ga-theme-events.js
+- [x] T007 [P] Integration test for ad blocker handling in frontend/tests/integration/test-ga-adblocker.js
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
-- [ ] T008 Initialize GA4 in frontend/src/App.tsx
-- [ ] T009 [P] Add search event tracking to frontend/src/components/SearchBar.tsx
-- [ ] T010 [P] Add model selection event tracking to frontend/src/components/ModelCard.tsx
-- [ ] T011 [P] Add theme toggle event tracking to frontend/src/components/ThemeToggle.tsx
-- [ ] T012 Implement custom event tracking utility in frontend/src/utils/analytics.ts
+- [x] T008 Initialize GA4 in frontend/src/App.tsx
+- [x] T009 [P] Add search event tracking to frontend/src/components/SearchBar.tsx
+- [x] T010 [P] Add model selection event tracking to frontend/src/components/ModelCard.tsx
+- [x] T011 [P] Add theme toggle event tracking to frontend/src/components/ThemeToggle.tsx
+- [x] T012 Implement custom event tracking utility in frontend/src/utils/analytics.ts
 
 ## Phase 3.4: Integration
-- [ ] T013 Implement ad blocker detection and error handling in frontend/src/utils/analytics.ts
-- [ ] T014 Add GA script loading with lazy initialization
+- [x] T013 Implement ad blocker detection and error handling in frontend/src/utils/analytics.ts
+- [x] T014 Add GA script loading with lazy initialization
 
 ## Phase 3.5: Polish
-- [ ] T015 [P] Unit tests for analytics utility functions in frontend/tests/unit/test-analytics.js
-- [ ] T016 Performance verification (<50ms impact)
-- [ ] T017 [P] Update README.md with GA tracking information
-- [ ] T018 Run quickstart.md validation scenarios
+- [x] T015 [P] Unit tests for analytics utility functions in frontend/tests/unit/test-analytics.js
+- [x] T016 Performance verification (<50ms impact)
+- [x] T017 [P] Update README.md with GA tracking information
+- [x] T018 Run quickstart.md validation scenarios
 
 ## Dependencies
 - Tests (T003-T007) before implementation (T008-T014)

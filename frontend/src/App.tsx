@@ -9,6 +9,7 @@ import {
   AppBar,
   Toolbar
 } from '@mui/material';
+import ReactGA from 'react-ga4';
 import ThemeProvider from './components/ThemeProvider';
 import ThemeToggle from './components/ThemeToggle';
 import SearchBar from './components/SearchBar';
@@ -51,6 +52,15 @@ function App() {
 
   useEffect(() => {
     fetchModels();
+  }, []);
+
+  // Initialize Google Analytics
+  useEffect(() => {
+    const measurementId = process.env.REACT_APP_GA_MEASUREMENT_ID;
+    if (measurementId) {
+      ReactGA.initialize(measurementId);
+      ReactGA.send({ hitType: 'pageview', page: window.location.pathname });
+    }
   }, []);
 
   const fetchModels = async () => {

@@ -6,6 +6,7 @@ import {
   Box
 } from '@mui/material';
 import { Model } from '../services/apiService';
+import { trackEvent } from '../utils/analytics';
 
 interface ModelCardProps {
   model: Model;
@@ -29,7 +30,10 @@ const ModelCard: React.FC<ModelCardProps> = ({ model, onClick }) => {
         display: 'flex',
         flexDirection: 'column',
       }}
-      onClick={onClick}
+      onClick={() => {
+        trackEvent('model_select', { model_id: model.id });
+        onClick();
+      }}
     >
       <CardContent sx={{ flexGrow: 1 }}>
         <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={1}>

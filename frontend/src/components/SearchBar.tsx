@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   TextField,
   InputAdornment,
@@ -11,6 +11,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import SortIcon from '@mui/icons-material/Sort';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { trackEvent } from '../utils/analytics';
 
 interface SearchBarProps {
   value: string;
@@ -35,6 +36,15 @@ const SearchBar: React.FC<SearchBarProps> = ({
   isAscending = false,
   isDescending = false
 }) => {
+  const prevSearchRef = useRef<string>('');
+
+  useEffect(() => {
+    if (value && value !== prevSearchRef.current && value.trim().length > 0) {
+      trackEvent('search', { search_term: value.trim() });
+    }
+    prevSearchRef.current = value;
+  }, [value]);
+
   const handleClear = () => {
     onChange('');
   };
