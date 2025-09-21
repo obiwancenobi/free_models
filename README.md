@@ -2,6 +2,8 @@
 
 A modern web application that displays and allows exploration of free AI models available through the OpenRouter API.
 
+**Note**: This project is an experiment demonstrating the use of the [**Spec Kit**](https://github.com/github/spec-kit) and [**Kilo Code**](https://kilocode.ai) frameworks to build a simple fullstack application. It showcases structured development workflows, from specification to deployment, using AI-assisted coding tools.
+
 ## Features
 
 - **Single Page Application**: Fast, responsive interface built with React
@@ -469,7 +471,7 @@ If you encounter any issues or have questions:
 
 ## Development Workflow
 
-This project was developed using the **OpenCode** framework, following a structured approach:
+This project was developed using the **Spec Kit** and **Kilo Code** frameworks, following a structured approach:
 
 ### Phases Completed:
 1. **Specification** (`/specify` command): Feature requirements and acceptance criteria
@@ -487,13 +489,15 @@ This project was developed using the **OpenCode** framework, following a structu
 - **Research Findings**: `specs/*/research.md`
 
 ### Quality Assurance:
+- ✅ **AI-Assisted Development**: Built using Kilo Code for efficient, guided implementation
+- ✅ **Specification-Driven**: Requirements defined with Spec Kit for clear project structure
 - ✅ **Test-Driven Development**: Tests written before implementation
 - ✅ **Type Safety**: TypeScript for frontend components
 - ✅ **Code Quality**: ESLint configuration
 - ✅ **Documentation**: Comprehensive API and component docs
 - ✅ **Performance**: Bundle optimization and analysis
 - ✅ **Security**: Helmet.js, CORS, input validation
-- ✅ **Deployment**: Docker containerization ready
+- ✅ **Deployment**: Docker containerization and Coolify deployment ready
 
 ## Troubleshooting
 
