@@ -2,6 +2,8 @@
 
 A modern web application that displays and allows exploration of free AI models available through the OpenRouter API.
 
+**🚀 Live Demo**: https://freemodels.riffcompiler.com
+
 **Note**: This project is an experiment demonstrating the use of the [**Spec Kit**](https://github.com/github/spec-kit) and [**Kilo Code**](https://kilocode.ai) frameworks to build a simple fullstack application. It showcases structured development workflows, from specification to deployment, using AI-assisted coding tools.
 
 ## Features
@@ -226,11 +228,11 @@ free-models/
     - Select "Docker Compose" as the build type
     - Set environment variables:
       - `OPENROUTER_API_KEY`: Your OpenRouter API key
-    - Configure custom domain (e.g., `freemodels.yourdomain.com`)
+    - Configure custom domain (e.g., `freemodels.riffcompiler.com`)
     - Deploy
-
-3. **Access the application**
-    - Frontend: Your configured domain (e.g., `https://freemodels.yourdomain.com`)
+    
+    3. **Access the application**
+    - Frontend: Your configured domain (e.g., `https://freemodels.riffcompiler.com`)
     - Backend API: Proxied through frontend (internal only)
     - Health check: Internal health checks handled by Coolify
 
