@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const modelService = require('../services/modelService');
+const { cacheMiddleware } = require('../middleware/cache');
 
 // GET /api/models - Retrieve all free AI models
-router.get('/', async (req, res) => {
+router.get('/', cacheMiddleware(300), async (req, res) => {
   try {
     const models = await modelService.fetchAllModels();
     res.json(models);
@@ -19,7 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/models/:id - Retrieve a specific model by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', cacheMiddleware(300), async (req, res) => {
   try {
     const model = await modelService.getModelById(req.params.id);
     res.json({ data: model });

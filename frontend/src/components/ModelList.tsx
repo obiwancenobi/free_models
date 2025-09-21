@@ -1,13 +1,10 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   Typography,
   Box,
   CircularProgress,
   Alert,
-  useTheme,
-  useMediaQuery
 } from '@mui/material';
-import Fuse from 'fuse.js';
 import ModelCard from './ModelCard';
 import { Model } from '../services/apiService';
 
@@ -27,30 +24,11 @@ const ModelList: React.FC<ModelListProps> = ({
   onModelClick
 }) => {
 
-  // Configure Fuse.js for fuzzy search
-  const fuse = useMemo(() => {
-    return new Fuse(models, {
-      keys: ['name', 'description', 'provider'],
-      threshold: 0.3,
-      includeScore: true
-    });
-  }, [models]);
-
-  // Filter models based on search term
-  const filteredModels = useMemo(() => {
-    if (!searchTerm.trim()) {
-      return models;
-    }
-
-    const results = fuse.search(searchTerm);
-    return results.map(result => result.item);
-  }, [models, searchTerm, fuse]);
-
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
-        <CircularProgress />
-        <Typography variant="body1" sx={{ ml: 2 }}>
+        <CircularProgress sx={{ color: 'var(--theme-primary)' }} />
+        <Typography variant="body1" sx={{ ml: 2, color: 'var(--theme-text-primary)' }}>
           Loading models...
         </Typography>
       </Box>
@@ -65,27 +43,11 @@ const ModelList: React.FC<ModelListProps> = ({
     );
   }
 
-  if (filteredModels.length === 0 && models.length > 0) {
-    return (
-      <Box textAlign="center" py={4}>
-        <Typography variant="h6" color="text.secondary">
-          No models found matching "{searchTerm}"
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          Try adjusting your search terms
-        </Typography>
-      </Box>
-    );
-  }
-
   if (models.length === 0) {
     return (
       <Box textAlign="center" py={4}>
-        <Typography variant="h6" color="text.secondary">
+        <Typography variant="h6" sx={{ color: 'var(--theme-text-secondary)' }}>
           No models available
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          Please check your connection and try again
         </Typography>
       </Box>
     );
@@ -93,8 +55,8 @@ const ModelList: React.FC<ModelListProps> = ({
 
   return (
     <Box>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        Showing {filteredModels.length} of {models.length} models
+      <Typography variant="body2" sx={{ mb: 2, color: 'var(--theme-text-secondary)' }}>
+        Showing {models.length} models
       </Typography>
 
       <Box
@@ -102,7 +64,7 @@ const ModelList: React.FC<ModelListProps> = ({
         flexDirection="column"
         gap={2}
       >
-        {filteredModels.map((model) => (
+        {models.map((model: Model) => (
           <ModelCard
             key={model.id}
             model={model}
