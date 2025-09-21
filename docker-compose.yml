@@ -5,8 +5,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    ports:
-      - "3001:3001"
     environment:
       - NODE_ENV=production
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
@@ -24,8 +22,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    ports:
-      - "80:80"
     depends_on:
       backend:
         condition: service_healthy
