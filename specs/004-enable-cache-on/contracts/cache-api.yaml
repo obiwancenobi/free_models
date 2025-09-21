@@ -1,0 +1,130 @@
+openapi: 3.0.3
+info:
+  title: Cache Management API
+  version: 1.0.0
+  description: API for managing cache operations
+
+servers:
+  - url: http://localhost:3001/api
+    description: Development server
+
+paths:
+  /cache/invalidate:
+    post:
+      summary: Invalidate cache
+      description: Clear all cached data or specific cache entries
+      operationId: invalidateCache
+      tags:
+        - Cache Management
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: Specific cache key to invalidate (optional)
+                  example: "models"
+              example:
+                key: "models"
+      responses:
+        '200':
+          description: Cache invalidated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Cache invalidated successfully"
+                  invalidated_keys:
+                    type: array
+                    items:
+                      type: string
+                    example: ["models", "model:123"]
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Unauthorized"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to invalidate cache"
+
+  /cache/stats:
+    get:
+      summary: Get cache statistics
+      description: Retrieve cache performance statistics
+      operationId: getCacheStats
+      tags:
+        - Cache Management
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Cache statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_entries:
+                    type: integer
+                    example: 5
+                  total_size:
+                    type: integer
+                    description: Approximate size in bytes
+                    example: 245760
+                  hit_ratio:
+                    type: number
+                    description: Cache hit ratio (0.0 to 1.0)
+                    example: 0.85
+                  entries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          example: "models"
+                        hits:
+                          type: integer
+                          example: 150
+                        misses:
+                          type: integer
+                          example: 25
+                        last_accessed:
+                          type: string
+                          format: date-time
+                          example: "2025-09-21T03:30:00.000Z"
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
