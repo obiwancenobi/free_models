@@ -93,6 +93,8 @@ free-models/
 ├── docker-compose.yml     # Multi-container deployment
 ├── .gitignore            # Git ignore rules
 └── README.md             # This file
+├── backend/.env          # Backend environment variables (API keys)
+└── frontend/.env         # Frontend environment variables (API URLs)
 ```
 
 ## Prerequisites
@@ -122,23 +124,29 @@ free-models/
    ```
 
 4. **Environment setup**
-   ```bash
-   # Create .env file in backend directory
-   cd ../backend
-   cat > .env << EOF
-   # OpenRouter API Configuration
-   OPENROUTER_API_KEY=your_openrouter_api_key_here
+    ```bash
+    # Create .env file in backend directory
+    cd ../backend
+    cat > .env << EOF
+    # OpenRouter API Configuration
+    OPENROUTER_API_KEY=your_openrouter_api_key_here
 
-   # Server Configuration
-   PORT=3001
-   NODE_ENV=development
+    # Server Configuration
+    PORT=3001
+    NODE_ENV=development
 
-   # CORS Configuration (for development)
-   ALLOWED_ORIGINS=http://localhost:3000
-   EOF
-   ```
+    # CORS Configuration (for development)
+    ALLOWED_ORIGINS=http://localhost:3000
+    EOF
 
-   **Note**: Get your OpenRouter API key from [OpenRouter Dashboard](https://openrouter.ai/keys)
+    # Create .env file in frontend directory (for local development)
+    cd ../frontend
+    cat > .env << EOF
+    REACT_APP_API_URL=http://localhost:3001
+    EOF
+    ```
+
+    **Note**: Get your OpenRouter API key from [OpenRouter Dashboard](https://openrouter.ai/keys). In production, set `OPENROUTER_API_KEY` in Coolify's environment variables.
 
 ## Running the Application
 
@@ -175,23 +183,49 @@ free-models/
 ### Docker Deployment
 
 1. **Using Docker Compose (Recommended)**
-   ```bash
-   # Build and start all services
-   docker-compose up --build
+    ```bash
+    # Build and start all services
+    docker-compose up --build
 
-   # Or run in background
-   docker-compose up -d --build
-   ```
+    # Or run in background
+    docker-compose up -d --build
+    ```
 
 2. **Access the application**
-   - Frontend: http://localhost
-   - Backend API: http://localhost:3001
-   - Health check: http://localhost:3001/health
+    - Frontend: http://localhost
+    - Backend API: http://localhost:3001
+    - Health check: http://localhost:3001/health
 
 3. **Stop the application**
-   ```bash
-   docker-compose down
-   ```
+    ```bash
+    docker-compose down
+    ```
+
+### Coolify Deployment
+
+1. **Prerequisites**
+    - Coolify installed on your VPS
+    - GitHub repository connected to Coolify
+    - Custom domain (optional, but recommended)
+
+2. **Deploy via Coolify Dashboard**
+    - Create a new project from your GitHub repository
+    - Select "Docker Compose" as the build type
+    - Set environment variables:
+      - `OPENROUTER_API_KEY`: Your OpenRouter API key
+    - Configure custom domain (e.g., `freemodels.yourdomain.com`)
+    - Deploy
+
+3. **Access the application**
+    - Frontend: Your configured domain (e.g., `https://freemodels.yourdomain.com`)
+    - Backend API: Proxied through frontend (internal only)
+    - Health check: Internal health checks handled by Coolify
+
+4. **Post-Deployment Notes**
+    - SSL certificates are auto-provisioned via Let's Encrypt
+    - API calls are proxied through Nginx in the frontend container
+    - Backend runs on internal port 3001, not exposed externally
+    - Monitor logs in Coolify dashboard for any issues
 
 ### Manual Docker Build
 
@@ -220,7 +254,7 @@ docker run -p 80:80 free-models-frontend
 
 ### Backend API
 
-**Base URL**: `http://localhost:3001` (development) / Container service (production)
+**Base URL**: `http://localhost:3001` (development) / Proxied through frontend (production)
 
 #### Models
 - `GET /api/models`
