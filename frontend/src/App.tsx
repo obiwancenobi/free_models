@@ -9,7 +9,6 @@ import {
   AppBar,
   Toolbar
 } from '@mui/material';
-import ReactGA from 'react-ga4';
 import ThemeProvider from './components/ThemeProvider';
 import ThemeToggle from './components/ThemeToggle';
 import SearchBar from './components/SearchBar';
@@ -18,6 +17,7 @@ import ModelDetails from './components/ModelDetails';
 import { apiService, Model } from './services/apiService';
 import { useSorting } from './hooks/useSorting';
 import './styles/theme.css';
+import { trackPageView } from './utils/analytics';
 
 const muiTheme = createTheme({
   palette: {
@@ -54,13 +54,8 @@ function App() {
     fetchModels();
   }, []);
 
-  // Initialize Google Analytics
   useEffect(() => {
-    const measurementId = process.env.REACT_APP_GA_MEASUREMENT_ID;
-    if (measurementId) {
-      ReactGA.initialize(measurementId);
-      ReactGA.send({ hitType: 'pageview', page: window.location.pathname });
-    }
+    trackPageView(window.location.pathname)
   }, []);
 
   const fetchModels = async () => {
