@@ -3,6 +3,7 @@ import ReactGA from 'react-ga4';
 export const trackEvent = (action: string, parameters?: Record<string, any>) => {
   try {
     if (ReactGA && typeof ReactGA.event === 'function') {
+      console.log('trackEvent', action, parameters);
       ReactGA.event(action, parameters);
     }
   } catch (error) {
@@ -14,6 +15,7 @@ export const trackEvent = (action: string, parameters?: Record<string, any>) => 
 export const trackPageView = (page: string) => {
   try {
     if (ReactGA && typeof ReactGA.send === 'function') {
+      console.log('trackPageView', page);
       ReactGA.send({ hitType: 'pageview', page });
     }
   } catch (error) {

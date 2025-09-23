@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import ReactGA from 'react-ga4';
 
 const measurementId = process.env.REACT_APP_GA_MEASUREMENT_ID;
-  if (measurementId) {
+if (measurementId) {
+  console.log('initiate analytics')
   ReactGA.initialize(measurementId);
 }
 
