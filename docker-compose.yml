@@ -25,6 +25,8 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    environment:
+      - REACT_APP_GA_MEASUREMENT_ID=${REACT_APP_GA_MEASUREMENT_ID}
     restart: unless-stopped
     networks:
       - app-network
