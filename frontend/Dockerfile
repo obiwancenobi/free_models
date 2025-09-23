@@ -3,6 +3,12 @@ FROM node:18-alpine as build
 
 WORKDIR /app
 
+# Accept build arg for GA measurement ID
+ARG REACT_APP_GA_MEASUREMENT_ID
+
+# Set it as environment variable for build
+ENV REACT_APP_GA_MEASUREMENT_ID=$REACT_APP_GA_MEASUREMENT_ID
+
 # Copy package files
 COPY package*.json ./
 
