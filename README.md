@@ -13,7 +13,9 @@ A modern web application that displays and allows exploration of free AI models 
 - **Model Details**: Click any model to view detailed information in a bottom sheet
 - **Material Design**: Clean, modern UI using Material-UI components
 - **Free Models Only**: Filters and displays only free-to-use AI models
-- **Backend Caching**: 5-minute in-memory caching for improved API performance and reduced external API calls
+- **Multi-Layer Caching**: Three-tier data retrieval (Cache → Database → API) for optimal performance and persistence
+- **PostgreSQL Integration**: Persistent storage ensuring data survives application restarts
+- **Health Monitoring**: Comprehensive health check endpoints for all system components
 
 ## Screenshots
 
@@ -34,11 +36,13 @@ A modern web application that displays and allows exploration of free AI models 
 
 ### Backend
 - **Node.js** with Express
+- **PostgreSQL** with pg client for persistent data storage
 - **Axios** for external API calls
 - **node-cache** for in-memory caching (5-minute TTL)
 - **CORS** for cross-origin requests
 - **Helmet** for security headers
 - **Morgan** for request logging
+- **dotenv** for environment variable management
 - **Jest** and **Supertest** for testing
 
 ## Project Structure
@@ -49,16 +53,25 @@ free-models/
 │   ├── Dockerfile          # Backend container configuration
 │   ├── package.json        # Backend dependencies and scripts
 │   ├── README.md           # Backend API documentation
+│   ├── .env.example        # Environment variables template
+│   ├── .gitignore          # Git ignore patterns
 │   ├── src/
 │   │   ├── app.js         # Express application setup
+│   │   ├── config/         # Configuration modules
+│   │   │   └── database.js # Database connection configuration
 │   │   ├── middleware/    # Custom middleware
 │   │   │   └── cache.js   # Cache middleware
 │   │   ├── routes/        # API endpoints
 │   │   │   ├── models.js  # Models API routes
-│   │   │   └── cache.js   # Cache management routes
-│   │   └── services/      # Business logic
-│   │       ├── modelService.js # OpenRouter API integration
-│   │       └── cacheService.js # Cache management service
+│   │   │   ├── cache.js   # Cache management routes
+│   │   │   └── health.js  # Health check endpoints
+│   │   ├── services/      # Business logic
+│   │   │   ├── modelService.js    # OpenRouter API integration with cache-first + DB fallback
+│   │   │   ├── cacheService.js    # Cache management service
+│   │   │   └── databaseService.js # PostgreSQL database operations
+│   │   └── database/      # Database related files
+│   │       └── migrations/ # Database schema migrations
+│   │           └── 001_create_ai_models.js # Initial schema creation
 │   └── tests/             # Backend tests
 │       ├── contract/      # API contract tests
 │       │   ├── test-cache-invalidate.js
@@ -139,20 +152,25 @@ free-models/
    ```
 
 4. **Environment setup**
-    ```bash
-    # Create .env file in backend directory
-    cd ../backend
-    cat > .env << EOF
-    # OpenRouter API Configuration
-    OPENROUTER_API_KEY=your_openrouter_api_key_here
+     ```bash
+     # Create .env file in backend directory
+     cd ../backend
+     cat > .env << EOF
+     # OpenRouter API Configuration
+     OPENROUTER_API_KEY=your_openrouter_api_key_here
 
-    # Server Configuration
-    PORT=3001
-    NODE_ENV=development
+     # Server Configuration
+     PORT=3001
+     NODE_ENV=development
 
-    # CORS Configuration (for development)
-    ALLOWED_ORIGINS=http://localhost:3000
-    EOF
+     # CORS Configuration (for development)
+     ALLOWED_ORIGINS=http://localhost:3000
+
+     # Database Configuration (PostgreSQL)
+     DATABASE_URL=postgresql://username:password@hostname:port/database_name
+     DB_SSL=require
+     DB_MAX_CONNECTIONS=10
+     EOF
 
     # Create .env file in frontend directory (for local development)
     cd ../frontend
@@ -206,10 +224,21 @@ free-models/
     docker-compose up -d --build
     ```
 
-2. **Access the application**
+2. **Database Setup (New Requirement)**
+    ```bash
+    # Run database migration to create ai_models table
+    cd backend/src/database/migrations
+    node 001_create_ai_models.js
+    ```
+
+3. **Access the application**
     - Frontend: http://localhost
     - Backend API: http://localhost:3001
-    - Health check: http://localhost:3001/health
+    - Health checks:
+      - Overall: http://localhost:3001/health
+      - Database: http://localhost:3001/health/database
+      - Cache: http://localhost:3001/health/cache
+      - Models: http://localhost:3001/health/models
 
 3. **Stop the application**
     ```bash
@@ -273,16 +302,18 @@ docker run -p 80:80 free-models-frontend
 
 #### Models
 - `GET /api/models`
-  - **Description**: Retrieve all free AI models from OpenRouter
+  - **Description**: Retrieve all free AI models with three-tier data retrieval
   - **Response**: Array of model objects with pricing, capabilities, and metadata
   - **Filtering**: Automatically filters for free models only (pricing.prompt = 0)
-  - **Caching**: 5-minute in-memory cache for improved performance
+  - **Data Flow**: Cache → Database → OpenRouter API (cache-first with persistence)
+  - **Performance**: <50ms cache hits, <200ms database hits, <2000ms API fallback
 
 - `GET /api/models/:id`
   - **Description**: Retrieve detailed information for a specific model
   - **Parameters**: `id` (string) - Model identifier
   - **Response**: Single model object with full details
-  - **Caching**: Individual model caching with 5-minute TTL
+  - **Data Flow**: Same three-tier approach as models list
+  - **Performance**: Same performance characteristics as models list
 
 #### Cache Management
 - `POST /api/cache/invalidate`
@@ -298,8 +329,20 @@ docker run -p 80:80 free-models-frontend
 
 #### Health Check
 - `GET /health`
-  - **Description**: Service health check endpoint
-  - **Response**: `{"status": "OK", "timestamp": "ISO_DATE"}`
+  - **Description**: Overall application health check
+  - **Response**: Application status, uptime, version information
+
+- `GET /health/database`
+  - **Description**: Database connectivity health check
+  - **Response**: Database connection status, pool information, error details
+
+- `GET /health/cache`
+  - **Description**: Cache system health check
+  - **Response**: Cache statistics, hit ratio, memory usage
+
+- `GET /health/models`
+  - **Description**: Models service health (cache + database + API)
+  - **Response**: End-to-end models service status and performance metrics
 
 ### External APIs
 
@@ -426,9 +469,11 @@ cd frontend && npm test -- --testPathPattern=integration
 - Efficient JSON parsing
 - Request logging with Morgan
 - Security middleware (Helmet, CORS)
-- Health check endpoint for monitoring
-- In-memory caching with node-cache (5-minute TTL)
-- Cache statistics and invalidation endpoints
+- Health check endpoints for monitoring (/, /database, /cache, /models)
+- **Multi-layer caching**: Cache-first → Database → API fallback
+- **PostgreSQL integration**: Persistent storage with connection pooling
+- **Graceful degradation**: Continues working even if database unavailable
+- **Performance monitoring**: Response time tracking across all data sources
 
 ### Architecture Overview
 
@@ -438,20 +483,29 @@ cd frontend && npm test -- --testPathPattern=integration
 │                 │             │                 │            │   API            │
 │ • ModelList     │             │ • /api/models   │            │ • /v1/models     │
 │ • SearchBar     │             │ • modelService  │            │                 │
-│ • ModelDetails  │             │ • error handling│            │                 │
-│ • API Service   │             │ • CORS          │            │                 │
+│ • ModelDetails  │             │ • cacheService  │            │                 │
+│ • API Service   │             │ • databaseSvc   │            │                 │
 └─────────────────┘             └─────────────────┘            └─────────────────┘
+                                ↕
+                           ┌─────────────────┐
+                           │   PostgreSQL    │
+                           │   Database      │
+                           │   (Persistent)  │
+                           └─────────────────┘
 ```
 
-**Data Flow:**
+**Data Flow (Cache-First with Persistence):**
 1. React app loads → fetches models from backend
-2. Backend checks cache first (5-minute TTL)
-3. Cache hit: returns cached data immediately
-4. Cache miss: proxies request to OpenRouter API, caches response
-5. Models filtered for free pricing only
-6. Frontend displays models in responsive grid
-7. User searches → client-side filtering with Fuse.js
-8. User clicks model → bottom sheet opens with details
+2. **Cache Check** (<50ms): Backend checks in-memory cache first
+3. **Cache Hit**: Returns cached data immediately
+4. **Cache Miss** → **Database Check** (<200ms): Queries PostgreSQL for stored models
+5. **Database Hit**: Updates cache and returns data
+6. **Database Miss** → **API Fallback** (<2000ms): Fetches from OpenRouter API
+7. **Store & Cache**: Saves fresh data to database and cache for future requests
+8. Models filtered for free pricing only
+9. Frontend displays models in responsive grid
+10. User searches → client-side filtering with Fuse.js
+11. User clicks model → bottom sheet opens with details
 
 ## Contributing
 
@@ -496,9 +550,13 @@ This project was developed using the **Spec Kit** and **Kilo Code** frameworks, 
 ### Key Artifacts:
 - **Initial Feature Spec**: `specs/001-create-a-web/spec.md`
 - **Cache Feature Spec**: `specs/004-enable-cache-on/spec.md`
+- **PostgreSQL Integration**: `specs/006-update-get-ai-model-list-from-existing-openrouter-api-to-postgresql-database/`
+  - Complete implementation plan, research, and task breakdown
+  - Database schema design and migration scripts
+  - API contracts and testing scenarios
 - **Implementation Plans**: `specs/*/plan.md`
 - **Task Breakdowns**: `specs/*/tasks.md`
-- **API Contracts**: `specs/*/contracts/*.yaml`
+- **API Contracts**: `specs/*/contracts/*.md`
 - **Research Findings**: `specs/*/research.md`
 
 ### Quality Assurance:

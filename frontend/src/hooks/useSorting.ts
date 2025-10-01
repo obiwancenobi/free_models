@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import Fuse from 'fuse.js';
-import { SortState, SortBy, SortOrder } from '../types/sorting';
+import { SortState, SortOrder } from '../types/sorting';
 import { Model } from '../services/apiService';
 
 export const useSorting = (models: Model[], searchTerm: string) => {

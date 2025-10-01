@@ -7,6 +7,9 @@ const dotenv = require('dotenv');
 // Load environment variables
 dotenv.config();
 
+// Services
+const databaseService = require('./services/databaseService');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -19,13 +22,10 @@ app.use(express.json());
 // Routes
 const modelsRouter = require('./routes/models');
 const cacheRouter = require('./routes/cache');
+const healthRouter = require('./routes/health');
 app.use('/api/models', modelsRouter);
 app.use('/api/cache', cacheRouter);
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
-});
+app.use('/health', healthRouter);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -48,11 +48,27 @@ app.use((req, res) => {
   });
 });
 
+async function startServer() {
+  try {
+    // Initialize database connection
+    await databaseService.connect();
+    console.log('Database system initialized');
+
+    // Start HTTP server
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log('Cache system initialized and ready');
+      console.log('PostgreSQL integration active');
+      console.log(`Health check available at http://localhost:${PORT}/health`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error.message);
+    process.exit(1);
+  }
+}
+
 if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log('Cache system initialized and ready');
-  });
+  startServer();
 }
 
 module.exports = app;
