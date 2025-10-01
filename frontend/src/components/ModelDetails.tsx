@@ -202,36 +202,6 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ model, open, onClose }) => 
                 {model.context_length.toLocaleString()} tokens
               </Typography>
             </Box>
-
-            <Box display="flex" justifyContent="space-between">
-              <Typography
-                variant="body2"
-                sx={{ color: 'var(--theme-text-secondary)' }}
-              >
-                Prompt Pricing:
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: 'var(--theme-text-primary)' }}
-              >
-                {model.pricing.prompt === 0 ? 'Free' : `$${model.pricing.prompt}/token`}
-              </Typography>
-            </Box>
-
-            <Box display="flex" justifyContent="space-between">
-              <Typography
-                variant="body2"
-                sx={{ color: 'var(--theme-text-secondary)' }}
-              >
-                Completion Pricing:
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: 'var(--theme-text-primary)' }}
-              >
-                {model.pricing.completion === 0 ? 'Free' : `$${model.pricing.completion}/token`}
-              </Typography>
-            </Box>
           </Box>
         </Box>
 
