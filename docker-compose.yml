@@ -9,6 +9,8 @@ services:
       - NODE_ENV=production
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
       - DATABASE_URL=${DATABASE_URL}
+      - DB_SSL=${DB_SSL}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
