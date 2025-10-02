@@ -13,9 +13,16 @@ const databaseService = require('./services/databaseService');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const corsOptions = {
+  origin: process.env.ALLOWED_ORIGINS,            // Only allow this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],         // Allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed request headers
+  credentials: true                                  // Allow cookies or other credentials
+};
+
 // Middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(morgan('combined'));
 app.use(express.json());
 
