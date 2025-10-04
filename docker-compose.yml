@@ -31,14 +31,6 @@ services:
       backend:
         condition: service_healthy
     restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-    volumes:
-      - ./frontend/logrotate.conf:/etc/logrotate.d/nginx:ro
-      - ./frontend/public:/usr/share/nginx/html:ro
     networks:
       - app-network
 

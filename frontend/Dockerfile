@@ -24,27 +24,14 @@ RUN npm run build
 # Production stage
 FROM nginx:alpine
 
-# Install logrotate and cron for log rotation
-RUN apk add --no-cache logrotate cronie
-
 # Copy built application from build stage
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy logrotate configuration
-COPY logrotate.conf /etc/logrotate.d/nginx
-
-# Create log directory with proper permissions
-RUN mkdir -p /var/log/nginx && \
-    chown -R nginx:nginx /var/log/nginx
-
-# Set up cron job for logrotate
-RUN echo "0 0 * * * /usr/sbin/logrotate /etc/logrotate.d/nginx" >> /etc/crontabs/root
-
 # Expose port
 EXPOSE 80
 
-# Start both cron and nginx
-CMD ["sh", "-c", "crond && nginx -g 'daemon off;'"]
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
