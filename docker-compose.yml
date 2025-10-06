@@ -11,6 +11,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - DB_SSL=${DB_SSL}
       - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS}
+      - HOST=0.0.0.0  # Explicit host binding for container networking
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
@@ -20,6 +21,10 @@ services:
       start_period: 40s
     networks:
       - app-network
+    # No ports exposed - backend only accessible within Docker network
+    # Network isolation: internal network prevents external access
+    # CORS restricts origins to allowed domains only
+    # Server binds to 0.0.0.0 for container-to-container communication
 
   frontend:
     build:
@@ -37,3 +42,4 @@ services:
 networks:
   app-network:
     driver: bridge
+    internal: true  # Prevents external access to the network
